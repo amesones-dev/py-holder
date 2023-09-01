@@ -1,0 +1,25 @@
+
+name: Docker Image Automatic build CI - Phase 0 Test
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: GITHUB env
+      run:  printenv |grep GIT
+
+    - name: Build the Docker image
+      run: docker build . --file ./run/Dockerfile-tests   --tag  my-image-name:$(date +%s)
+
+    - name: GITHUB event
+      run:  cat "$GITHUB_EVENT_P
