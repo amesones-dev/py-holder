@@ -1,0 +1,20 @@
+name: Inspect GITHUB events and GitHub actions environment
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: GITHUB event
+      run:  cat "$GITHUB_EVENT_PATH"
+
+    - name: GITHUB env
+      run:  printenv |grep GIT
