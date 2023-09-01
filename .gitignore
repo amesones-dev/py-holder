@@ -1,0 +1,8 @@
+.idea
+.idea/*
+pyproject.toml
+src/setup.py
+.run
+.run/*
+/run/k8s/
+setup.py

@@ -1,0 +1,154 @@
+name: Run automated unit tests new-feature
+
+# Workflow Environment variables
+# Scope: accessible from every job in workflow
+# Can be accessed as ${{ env.NAME }} in jobs
+# Values are literal strings. When env.NAME is found in job definition
+# ${{ env.NAME }} is replaced by strings specified in this section
+
+
+env:
+  TEST_ERR_CONDITION: FAILED
+  TEST_OK: OK
+  TEST_NOT_OK: NOT_OK
+  TEST_ERR_MSG: "Unittests failed. Build job cannot continue"
+  TEST_OK_MSG:  "Unittests OK. Proceeding to build job"
+
+  TEST_DOCKER_TAG: test-${GITHUB_REPOSITORY_ID}-${GITHUB_REF_NAME}-$GITHUB_RUN_ID
+  TEST_LOG: test-${GITHUB_RUN_ID}-result.log
+  TEST_DOCKERFILE: ./run/Dockerfile-tests
+
+  BUILD_DOCKERFILE: ./run/Dockerfile
+  BUILD_DOCKER_TAG: build-${GITHUB_REPOSITORY_ID}-${GITHUB_REF_NAME}-$GITHUB_RUN_ID
+  BUILD_LOG: build-${GITHUB_RUN_ID}-result.log
+
+
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+
+jobs:
+
+  unittests:
+    runs-on: ubuntu-latest
+    outputs:
+      test-result: ${{ steps.test-report.outputs.result }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build the tests Docker image
+      run: docker build . --file  ${{ env.TEST_DOCKERFILE }}  --tag ${{ env.TEST_DOCKER_TAG }}
+
+    - name: Run unit tests
+      run: docker run  ${{ env.TEST_DOCKER_TAG }} 2>&1 | tee ${{ env.TEST_LOG }}
+
+    - id: test-report
+      name: Generate test result outputs
+      run: |
+            found_errors=$(grep -o ${{ env.TEST_ERR_CONDITION }} ${{ env.TEST_LOG }} | head -n 1)
+            if [ -z $found_errors ]; then result=${{ env.TEST_OK }};else result=${{ env.TEST_NOT_OK }};fi
+            echo "result=${result}"
+            echo "result=${result}" >> $GITHUB_OUTPUT
+
+  branch_build_and_push:
+    runs-on: ubuntu-latest
+    needs: unittests
+    outputs:
+      build-docker-tag: ${{ steps.tag-push.outputs.result }}
+
+    steps:
+      - name: Check tests result
+        # Do not use ${{ }} with if conditions
+        # Reference: https://docs.github.com/en/actions/using-jobs/using-conditions-to-control-job-execution
+        if: needs.unittests.outputs.test-result==env.TEST_NOT_OK
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('${{ env.TEST_ERR_MSG }} ${{ needs.unittests.outputs.test-result }}')
+
+      - uses: actions/checkout@v3
+
+      - name: Build
+        if: success()
+        run:  | 
+              echo ${{ env.TEST_OK_MSG }}
+              docker build . --file  ${{ env.BUILD_DOCKERFILE }}  --tag ${{ env.BUILD_DOCKER_TAG }}
+
+      - name: All systems check
+        if: success()
+        run: |
+          docker_id=$(docker run -d   ${{ env.BUILD_DOCKER_TAG }})
+          docker exec $docker_id  sh -c "ps -a" | grep "python"
+          docker stop --time 1 $docker_id
+
+      - name: Log in to Docker Hub
+        if: success()
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - id: tag-push
+        name: Tag and push
+        if: success()
+        run: |
+          export REMOTE_TAG="${{ vars.DOCKERHUB_REPO }}:${{ env.BUILD_DOCKER_TAG }}"
+          docker tag ${{ env.BUILD_DOCKER_TAG }} ${REMOTE_TAG}
+          docker push ${REMOTE_TAG}
+          result=${{ env.BUILD_DOCKER_TAG }}
+          echo "result=${result}"
+          echo "result=${result}" >> $GITHUB_OUTPUT
+
+
+  run_dh_container:
+    runs-on: ubuntu-latest
+    needs: branch_build_and_push
+
+    steps:
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: docker_pull
+        if: success()
+        run: |
+          export REMOTE_TAG="${{ vars.DOCKERHUB_REPO }}:${{ env.BUILD_DOCKER_TAG }}"
+          docker pull -q ${REMOTE_TAG}
+          docker network ls
+          
+          export PORT=5000
+          docker_id=$(docker run -d -e $PORT -p $PORT:$PORT --network bridge ${REMOTE_TAG})
+          docker exec $docker_id  sh -c "wget -S -q 127.0.0.1:5000" 
+          
+  run_dh_container_as_svc:
+    runs-on: ubuntu-latest
+    needs: branch_build_and_push
+    container: alpine
+    services:
+      my_app:
+        image: ${{vars.DOCKERHUB_REPO}}:${{needs.branch_build_and_push.outputs.build-docker-tag}}
+        credentials:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+        env:
+          PORT: 5000
+        ports:
+          - 5000:5000
+    steps:
+      - name: test_app_endpoint
+        if: success()
+        run: |
+          wget -S -q -O /dev/null my_app:5000
+        
+        
+          
+
+          
+          
+          
