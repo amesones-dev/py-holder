@@ -120,7 +120,8 @@ jobs:
           
           # Run docker connected to  DOCKER_NETWORK
           export PORT=5000
-          docker_id=$(docker run -d  -e $PORT -p $PORT:$PORT --network ${DOCKER_NETWORK} ${REMOTE_TAG})
+          export MAP_PORT=5001
+          docker_id=$(docker run -d  -e $PORT -p $MAP_PORT:$PORT --network ${DOCKER_NETWORK} ${REMOTE_TAG})
           
           # Docker run info
           docker exec $docker_id  sh -c "ps -a" | grep "python"
@@ -128,8 +129,10 @@ jobs:
           docker exec $docker_id  sh -c "ip addr show"
           
           # Health check
-          docker exec $docker_id  sh -c "wget -S -q -O /dev/null 127.0.0.1:$PORT/${{env.TEST_ENDPOINT}}" 
-          curl 127.0.0.1:$PORT/${{env.TEST_ENDPOINT}}
+          # Checks endpoint within container
+          docker exec $docker_id  sh -c "wget -S -q -O /dev/null 127.0.0.1:$PORT/${{env.TEST_ENDPOINT}}"
+          # And from host through mapped port
+          wget -S -q -O /dev/null 127.0.0.1:$MAP_PORT/${{env.TEST_ENDPOINT}}
           
           # Tear down env  
           docker stop $docker_id
