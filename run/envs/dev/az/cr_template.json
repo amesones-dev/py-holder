@@ -58,11 +58,11 @@
         "imagePassword": {
             "type": "secureString"
         },
-        "environmentVariable_flask_key": {
-            "type": "secureString"
-        },
         "environmentVariable_cr_target_port": {
             "type": "string"
+        },
+        "environmentVariable_flask_key": {
+            "type": "secureString"
         },
         "ipAddressType": {
             "type": "string"
@@ -92,12 +92,12 @@
                             },
                             "environmentVariables": [
                                 {
-                                    "name": "FLASK_SECRET_KEY",
-                                    "secureValue": "[parameters('environmentVariable_flask_key')]"
-                                },
-                                {
                                     "name": "PORT",
                                     "value": "[parameters('environmentVariable_cr_target_port')]"
+                                },
+                                {
+                                    "name": "FLASK_KEY",
+                                    "secureValue": "[parameters('environmentVariable_flask_key')]"
                                 }
                             ],
                             "ports": "[parameters('ports')]"
@@ -119,10 +119,7 @@
                     "ports": "[parameters('ports')]"
                 }
             },
-            "tags": {
-                "env": "dev",
-                "project": "cr-az-gh"
-            }
+            "tags": {}
         }
     ]
 }
