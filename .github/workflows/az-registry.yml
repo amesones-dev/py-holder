@@ -92,7 +92,7 @@ jobs:
           echo "result=${result}" >> $GITHUB_OUTPUT
 
   deploy_to_AZ:
-    name: Deploy Container Instance
+    name: Deploy to AZ Container Instance
     runs-on: ubuntu-latest
     needs: branch_build_and_push
     env:

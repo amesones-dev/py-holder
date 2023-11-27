@@ -121,5 +121,16 @@
             },
             "tags": {}
         }
-    ]
+    ],
+    "outputs": {
+        "containerName": {
+          "type": "string",
+          "value": "[parameters('containerName')]"
+        },
+        "svc_url":
+        {
+          "type": "string",
+          "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups'))]"
+        }
+  }
 }
