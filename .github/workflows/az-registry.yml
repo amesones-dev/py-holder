@@ -137,6 +137,7 @@ jobs:
         template: run/envs/dev/az/cr_template.json
         parameters: run/envs/dev/az/cr_parameters.json location="${{ env.LOCATION }}" containerName="${{ env.CR_NAME }}"  imageRegistryLoginServer="${{ env.REGISTRY }}"  imageName="${{ env.CR_IMAGE }}" imageUsername="${{ secrets.DOCKERHUB_USER }}" imagePassword="${{ secrets.DOCKERHUB_PASSWORD }}" environmentVariable_flask_key="${{ secrets.CR_FLASK_KEY }}" environmentVariable_cr_target_port="${{ env.CR_TARGET_PORT }}"
         # additionalArguments: "--what-if --rollback-on-error --what-if-exclude-change-types Create Ignore"
-
+    - name: Display Container Instance Info
+      run: echo ${{ steps.deploy.outputs.containerIPv4Address }}
 
 

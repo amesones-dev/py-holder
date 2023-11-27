@@ -122,15 +122,10 @@
             "tags": {}
         }
     ],
-    "outputs": {
-        "containerName": {
+     "outputs": {
+        "containerIPv4Address": {
           "type": "string",
-          "value": "[parameters('containerName')]"
-        },
-        "container_data":
-        {
-          "type": "string",
-          "value": "[resourceId('Microsoft.ContainerInstance/containerGroups', parameters('containerName'))]"
+          "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', parameters('containerName'))).ipAddress.ip]"
         }
-  }
+      }
 }
