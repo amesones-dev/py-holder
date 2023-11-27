@@ -104,11 +104,11 @@ jobs:
       CR_IMAGE_TYPE: "Private"
       CR_OS_TYPE: "Linux"
       CPU_CORES: 1
-      MEM: "1.5GB"
+      MEM: "1.5"
       AZ_SKU: "Standard"
       RESTART_POL: "OnFailure"
       REGISTRY: "index.docker.io"
-      CR_TARGET_PORT: "80"
+      CR_TARGET_PORT: '{"port": 80,"protocol": "TCP"}'
       IP_TYPE: "Public"
       PUBLISH_PORT_LIST: "[80]"
 
@@ -129,7 +129,7 @@ jobs:
         subscriptionId: ${{ env.SUBSCRIPTIONID }}
         resourceGroupName: ${{ env.RESOURCEGROUPNAME }}
         template: run/envs/dev/az/cr_template.json
-        parameters:  location="${{ env.LOCATION }}"  containerName="${{ env.CR_NAME }}"  imageType="${{ env.CR_IMAGE_TYPE }}" imageName="${{ env.CR_IMAGE }}" osType="${{ env.CR_OS_TYPE }}" numberCpuCores="$ {{ env.CPU_CORES }}" memory="${{ env.MEM }}" restartPolicy="$ {{ env.RESTART_POL }}" sku="${{ env.AZ_SKU }}" imageRegistryLoginServer="${{ env.REGISTRY }}" imageUsername="${{ secrets.DOCKERHUB_USER }}" imagePassword="${{ secrets.DOCKERHUB_PASSWORD }}" environmentVariable_flask_key="${{ secrets.CR_FLASK_KEY }}" environmentVariable_cr_target_port="${{ env.CR_TARGET_PORT }}" ipAddressType="${{ env.PUBLISH_PORT }}" ports="${{ env.PUBLISH_PORT_LIST }}"
+        parameters: availabilityZones=[] location="${{ env.LOCATION }}"  containerName="${{ env.CR_NAME }}"  imageType="${{ env.CR_IMAGE_TYPE }}" imageName="${{ env.CR_IMAGE }}" osType="${{ env.CR_OS_TYPE }}" numberCpuCores="${{ env.CPU_CORES }}" memory="${{ env.MEM }}" restartPolicy="${{ env.RESTART_POL }}" sku="${{ env.AZ_SKU }}" imageRegistryLoginServer="${{ env.REGISTRY }}" imageUsername="${{ secrets.DOCKERHUB_USER }}" imagePassword="${{ secrets.DOCKERHUB_PASSWORD }}" environmentVariable_flask_key="${{ secrets.CR_FLASK_KEY }}" environmentVariable_cr_target_port="${{ env.CR_TARGET_PORT }}" ipAddressType="${{ env.PUBLISH_PORT }}" ports="${{ env.PUBLISH_PORT_LIST }}"
 
 
 
