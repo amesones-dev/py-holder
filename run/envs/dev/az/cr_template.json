@@ -127,10 +127,10 @@
           "type": "string",
           "value": "[parameters('containerName')]"
         },
-        "svc_url":
+        "container_data":
         {
           "type": "string",
-          "value": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups'))]"
+          "value": "[resourceId('Microsoft.ContainerInstance/containerGroups', parameters('containerName'))]"
         }
   }
 }
