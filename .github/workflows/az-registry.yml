@@ -98,6 +98,7 @@ jobs:
     env:
       RESOURCEGROUPNAME: "cr_space_rg"
       SUBSCRIPTIONID: "f3e698ac-c3e6-4ca7-8ae6-feae2ccb220b"
+      LOCATION: "uksouth"
       CR_NAME: "cr-101"
       CR_IMAGE: "${{vars.DOCKERHUB_REPO}}:${{needs.branch_build_and_push.outputs.build-docker-tag}}"
       CR_IMAGE_TYPE: "Private"
@@ -128,7 +129,7 @@ jobs:
         subscriptionId: ${{ env.SUBSCRIPTIONID }}
         resourceGroupName: ${{ env.RESOURCEGROUPNAME }}
         template: run/envs/dev/az/cr_template.json
-        parameters:  containerName = "${{ env.CR_NAME  }}"  imageType = "${{ env.CR_IMAGE_TYPE }}" imageName = "${{ env.CR_IMAGE }}" osType = "${{ env.CR_OS_TYPE }}" numberCpuCores = "$ {{ env.CPU_CORES }}" memory = "${{ env.MEM }}" restartPolicy = "$ {{ env.RESTART_POL }}" sku = "${{ env.AZ_SKU }}" imageRegistryLoginServer = "${{ env.REGISTRY }}" imageUsername = "${{ secrets.DOCKERHUB_USER }}" imagePassword = "${{ secrets.DOCKERHUB_PASSWORD }}" environmentVariable_flask_key = "${{ secrets.CR_FLASK_KEY }}" environmentVariable_cr_target_port = "${{ env.CR_TARGET_PORT }}" ipAddressType = "${{ env.PUBLISH_PORT }}" ports = "${{ env.PUBLISH_PORT_LIST }}"
+        parameters:  location="${{ env.LOCATION }}"  containerName="${{ env.CR_NAME }}"  imageType="${{ env.CR_IMAGE_TYPE }}" imageName="${{ env.CR_IMAGE }}" osType="${{ env.CR_OS_TYPE }}" numberCpuCores="$ {{ env.CPU_CORES }}" memory="${{ env.MEM }}" restartPolicy="$ {{ env.RESTART_POL }}" sku="${{ env.AZ_SKU }}" imageRegistryLoginServer="${{ env.REGISTRY }}" imageUsername="${{ secrets.DOCKERHUB_USER }}" imagePassword="${{ secrets.DOCKERHUB_PASSWORD }}" environmentVariable_flask_key="${{ secrets.CR_FLASK_KEY }}" environmentVariable_cr_target_port="${{ env.CR_TARGET_PORT }}" ipAddressType="${{ env.PUBLISH_PORT }}" ports="${{ env.PUBLISH_PORT_LIST }}"
 
 
 
