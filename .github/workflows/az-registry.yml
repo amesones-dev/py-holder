@@ -108,7 +108,7 @@ jobs:
       AZ_SKU: "Standard"
       RESTART_POL: "OnFailure"
       REGISTRY: "index.docker.io"
-      CR_TARGET_PORT: '{"port": 80,"protocol": "TCP"}'
+      CR_TARGET_PORT: '[{"port": 80,"protocol": "TCP"}]'
       IP_TYPE: "Public"
       PUBLISH_PORT_LIST: "[80]"
 
