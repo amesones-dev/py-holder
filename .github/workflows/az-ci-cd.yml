@@ -118,11 +118,11 @@ jobs:
     needs: [ branch_build_and_push, run_dh_container_as_svc ]
     env:
       # AZ resources
-      RESOURCEGROUPNAME: "cr_space_rg"
-      SUBSCRIPTIONID: "f3e698ac-c3e6-4ca7-8ae6-feae2ccb220b"
+      RESOURCEGROUPNAME: ${{ vars.AZ_RG }}
+      SUBSCRIPTIONID: ${{ secrets.AZ_SUBS }}
 
       # Container instances
-      LOCATION: "uksouth"
+      LOCATION: ${{ vars.AZ_LOCATION }}
       CR_NAME: "cr-101"
       CR_IMAGE: "${{vars.DOCKERHUB_REPO}}:${{needs.branch_build_and_push.outputs.build-docker-tag}}"
       CR_IMAGE_TYPE: "Private"
