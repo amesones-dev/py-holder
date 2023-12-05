@@ -1,4 +1,4 @@
-name: Run automated unit tests and build new-feature
+name: AZ Container Instance CI/CD Pipeline
 on:
   push:
     branches:
