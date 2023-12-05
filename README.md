@@ -50,17 +50,14 @@ STAMP_COOKIE_VALUE = os.environ.get('STAMP_COOKIE_VALUE') or base64.urlsafe_b64e
 
 ## Running the application locally  
 
-### Create Google Cloud resources
-1. Create a [Google Cloud](https://console.cloud.google.com/home/dashboard)  platform account if you do not already have it.
-2. [Create a Google Cloud project](https://developers.google.com/workspace/guides/create-project) or use an existing one.
-
 ### Use Google Cloud Shell
-To start coding right away, launch [Google Cloud Shell](https://console.cloud.google.com/home/).
+* Create a [Google Cloud](https://console.cloud.google.com/home/dashboard)  platform account if you do not already have it.
+* [Create a Google Cloud project](https://developers.google.com/workspace/guides/create-project) or use an existing one.
+* To start coding right away, launch [Google Cloud Shell](https://console.cloud.google.com/home/).  
 
-
-### Or use your own development environment
-If you would rather use *your own local development machine* you will need to  
-[Install Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstart) and Install Python
+ 
+### ...or use your own development environment
+#### Requirements
 
 * Install python packages.
 
