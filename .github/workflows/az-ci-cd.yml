@@ -11,6 +11,7 @@ env:
 jobs:
   unittests:
     runs-on: ubuntu-latest
+    environment: Azure Dev
     env:
       TEST_ERR_CONDITION: FAILED
       TEST_OK: OK
