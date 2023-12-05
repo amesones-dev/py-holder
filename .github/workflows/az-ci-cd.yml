@@ -10,8 +10,7 @@ env:
 
 jobs:
   unittests:
-    runs-on: ubuntu-latest
-    environment: Azure Dev
+    runs-on: ubuntu-latest    
     env:
       TEST_ERR_CONDITION: FAILED
       TEST_OK: OK
@@ -117,6 +116,7 @@ jobs:
     name: Deploy to AZ Container Instance
     runs-on: ubuntu-latest
     needs: [ branch_build_and_push, run_dh_container_as_svc ]
+    environment: Azure Dev
     env:
       # AZ resources
       RESOURCEGROUPNAME: ${{ vars.AZ_RG }}
