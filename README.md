@@ -1,5 +1,5 @@
 # py-holder
-#### Tools for developing python Flask apps in Google Cloud
+#### Tools for developing python Flask apps in public Cloud
 
  
 
