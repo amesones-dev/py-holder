@@ -93,11 +93,11 @@ jobs:
 
   run_ci_as_svc_test:
     runs-on: ubuntu-latest
-    needs: branch_build_and_push
+    needs: feature_build_and_push
     container: alpine
     services:
       my_app:
-        image: ${{vars.DOCKERHUB_REPO}}:${{needs.branch_build_and_push.outputs.build-docker-tag}}
+        image: ${{vars.DOCKERHUB_REPO}}:${{needs.feature_build_and_push.outputs.build-docker-tag}}
         credentials:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
@@ -114,7 +114,7 @@ jobs:
 
   deploy_to_AZ:    
     runs-on: ubuntu-latest
-    needs: [ branch_build_and_push, run_dh_container_as_svc ]
+    needs: [ feature_build_and_push, run_ci_as_svc_test ]
     environment: Azure Dev
     env:
       # AZ resources
@@ -124,7 +124,7 @@ jobs:
       # Container instances
       LOCATION: ${{ vars.AZ_LOCATION }}
       CR_NAME: "cr-101"
-      CR_IMAGE: "${{vars.DOCKERHUB_REPO}}:${{needs.branch_build_and_push.outputs.build-docker-tag}}"
+      CR_IMAGE: "${{vars.DOCKERHUB_REPO}}:${{needs.feature_build_and_push.outputs.build-docker-tag}}"
       CR_IMAGE_TYPE: "Private"
       REGISTRY: "index.docker.io"
       CR_TARGET_PORT: "80"
