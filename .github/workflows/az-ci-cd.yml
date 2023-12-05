@@ -41,7 +41,7 @@ jobs:
             echo "result=${result}" >> $GITHUB_OUTPUT
 
 
-  branch_build_and_push:
+  feature_build_and_push:
     runs-on: ubuntu-latest
     needs: unittests
     outputs:
@@ -91,7 +91,7 @@ jobs:
           echo "result=${result}"
           echo "result=${result}" >> $GITHUB_OUTPUT
 
-  run_dh_container_as_svc:
+  run_ci_as_svc_test:
     runs-on: ubuntu-latest
     needs: branch_build_and_push
     container: alpine
@@ -112,8 +112,7 @@ jobs:
           wget -S -q -O /dev/null my_app:5000
           
 
-  deploy_to_AZ:
-    name: Deploy to AZ Container Instance
+  deploy_to_AZ:    
     runs-on: ubuntu-latest
     needs: [ branch_build_and_push, run_dh_container_as_svc ]
     environment: Azure Dev
