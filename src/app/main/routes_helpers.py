@@ -118,5 +118,5 @@ def app_time():
     """Return app time info formatted as a dictionary"""
     data = {"status": "OK"}
     data.update({"now_utc_iso": datetime.datetime.utcnow().isoformat()})
-    data.update({"now_utc_timestamp": datetime.datetime.utcnow().timestamp().__str__()})
+    data.update({"now_utc_timestamp": str(datetime.datetime.utcnow().timestamp())})
     return data
