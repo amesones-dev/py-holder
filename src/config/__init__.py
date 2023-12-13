@@ -2,7 +2,8 @@ import os
 import base64
 
 
-class Config(object):
+class Config:
+
     # App name for HTML views, it appears on titles, links, etc.
     APP_NAME = os.environ.get('APP_NAME') or 'py-holder-demo'
     APP_VER = os.environ.get('APP_VER') or '1.0'
@@ -28,7 +29,7 @@ class Config(object):
     SESSION_TYPE = os.environ.get('SESSION_TYPE') or "filesystem"
 
 
-class TestConfig(object):
+class TestConfig:
     # App name for HTML views, it appears on titles, links, etc.
     VIEW_APP_NAME = os.environ.get('VIEW_APP_NAME') or 'py-holder-demo-test'
     APP_NAME = os.environ.get('APP_NAME') or 'py-holder-demo-test'
