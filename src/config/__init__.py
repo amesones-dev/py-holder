@@ -1,9 +1,9 @@
+"""App Config classes"""
 import os
 import base64
 
 
 class Config:
-
     # App name for HTML views, it appears on titles, links, etc.
     APP_NAME = os.environ.get('APP_NAME') or 'py-holder-demo'
     APP_VER = os.environ.get('APP_VER') or '1.0'
