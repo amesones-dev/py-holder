@@ -22,4 +22,7 @@ jobs:
       run: docker build . --file ./run/Dockerfile-tests   --tag  my-image-name:$(date +%s)
 
     - name: GITHUB event
-      run:  cat "$GITHUB_EVENT_P
+      run:  cat "$GITHUB_EVENT_PATH"
+
+    - name: GITHUB env
+      run:  printenv |grep GIT
