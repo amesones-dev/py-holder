@@ -72,7 +72,7 @@ def response_log(raw_response, raw_request, log_level=logging.INFO):
 
     response_simple_log_str = \
         f'Outgoing RESPONSE to ' \
-        f'{raw_request.__hash__()}{filler(30)}\nStatus: {raw_response.status_code}'+\
+        f'{hash(raw_request)}{filler(30)}\nStatus: {raw_response.status_code}'+\
                               f'\nHeaders:' \
                               f'\n{print_dict(raw_response.headers)}\n' \
                               f'Data\n:{raw_response.data}' + \
@@ -84,7 +84,7 @@ def response_log(raw_response, raw_request, log_level=logging.INFO):
 # Default log level: INFO
 def request_log(raw_request, log_level=logging.INFO):
     """Logs request to standard logging"""
-    request_simple_log_str = f'Incoming REQUEST {raw_request.__hash__()} {filler(30)}' + \
+    request_simple_log_str = f'Incoming REQUEST {hash(raw_request)} {filler(30)}' + \
                              f'\nPath: {raw_request.path}\nServer: {request.server}' + \
                              f'\nMethod: {raw_request.method}\nOrigin: {request.origin}' + \
                              f'\nQuery: {raw_request.query_string}' + \
@@ -104,7 +104,7 @@ def headers_to_dict(raw_request):
 def request_mirror(raw_request):
     """Return request info formatted as a dictionary"""
     request_image = {}
-    request_image.update({'0_id': f'{raw_request.__hash__()}'})
+    request_image.update({'0_id': f'{hash(raw_request)}'})
     request_image.update({'1_server': raw_request.server})
     request_image.update({'2_path': raw_request.path})
     request_image.update({'3_method': raw_request.method})
