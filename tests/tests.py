@@ -9,12 +9,14 @@ from config import TestConfig
 
 
 class MockFSOApp:
+    """Mock App  class"""
     def __init__(self, config_class=TestConfig):
         """Creates a mock app using config class attributes"""
         self.config = config_class().to_dict()
 
 
 class ModelsTestCase(unittest.TestCase):
+    """ModelsTestCase Unit Test class"""
     # Use flask_app=True  value to create a flask app with the Flask app factory create_app
     # and with test config defined in high level TestConfig
     # Creating a Flask app is needed when testing Flask related capabilities

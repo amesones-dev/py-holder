@@ -4,6 +4,7 @@ import base64
 
 
 class Config:
+    """App Config class"""
     # App name for HTML views, it appears on titles, links, etc.
     APP_NAME = os.environ.get('APP_NAME') or 'py-holder-demo'
     APP_VER = os.environ.get('APP_VER') or '1.0'
@@ -30,6 +31,7 @@ class Config:
 
 
 class TestConfig:
+    """App Config class for unit tests"""
     # App name for HTML views, it appears on titles, links, etc.
     VIEW_APP_NAME = os.environ.get('VIEW_APP_NAME') or 'py-holder-demo-test'
     APP_NAME = os.environ.get('APP_NAME') or 'py-holder-demo-test'
