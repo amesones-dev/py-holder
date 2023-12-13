@@ -1,3 +1,5 @@
+[![AZ Container Instance CI/CD Pipeline](https://github.com/amesones-dev/py-holder/actions/workflows/az-ci-cd.yml/badge.svg)](https://github.com/amesones-dev/py-holder/actions/workflows/az-ci-cd.yml)
+
 # py-holder
 #### Tools for developing python Flask apps in Google Cloud
 
