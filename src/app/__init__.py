@@ -1,3 +1,5 @@
+"""Flask App factory"""
+
 from flask import Flask
 from config import Config
 # Flask blueprints imports
