@@ -3,6 +3,7 @@ from config import Config
 
 
 def create_app(config_class=Config):
+    """Create Flask app from Config class"""
     # Create Flask app
     app = Flask(__name__)
     # Load config
