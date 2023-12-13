@@ -1,3 +1,4 @@
+"""Flask module: errors"""
 from flask import Blueprint
 
 

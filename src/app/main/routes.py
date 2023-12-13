@@ -1,3 +1,4 @@
+"""Flask module routes: main"""
 from flask import redirect, url_for, request, current_app
 from app.main import bp
 from app.main.routes_helpers import json_response, request_mirror, app_time, request_log

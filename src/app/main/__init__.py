@@ -1,3 +1,4 @@
+"""Flask module: main"""
 from flask import Blueprint
 
 

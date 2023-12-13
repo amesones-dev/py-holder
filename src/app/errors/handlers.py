@@ -1,3 +1,4 @@
+"""Handlers  for Flask module: errors"""
 import logging
 from flask import request, jsonify
 from werkzeug.http import HTTP_STATUS_CODES

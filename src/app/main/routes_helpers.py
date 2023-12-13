@@ -1,3 +1,5 @@
+"""Helper functions for Flask module routes: main"""
+
 import datetime
 import logging
 
