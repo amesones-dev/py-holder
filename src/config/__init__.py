@@ -7,15 +7,17 @@ class Config(object):
     APP_NAME = os.environ.get('APP_NAME') or 'py-holder-demo'
     APP_VER = os.environ.get('APP_VER') or '1.0'
     STAMP_COOKIE_KEY = os.environ.get('STAMP_COOKIE_KEY') or 'x-stamp'
-    STAMP_COOKIE_VALUE = os.environ.get('STAMP_COOKIE_VALUE') or base64.urlsafe_b64encode(APP_NAME.encode())
-
+    STAMP_COOKIE_VALUE = os.environ.get('STAMP_COOKIE_VALUE') \
+                         or base64.urlsafe_b64encode(APP_NAME.encode())
 
     # Flask config
     # Recommended generating key before running server
-    # export  FLASK_SECRET_KEY =$(openssl rand -base64 128 | tee /secrets_storage_path/flask_secret_key.log)
+    # export FLASK_KEY_LOG=/secrets_storage_path/flask_secret_key.log
+    # export  FLASK_SECRET_KEY=$(openssl rand -base64 128 | tee ${FLASK_KEY_LOG})
     # It generates a strong key and record its value to variable and file both
 
-    # The Config object key for the Flask app must be called SECRET_KEY, regardless of the OS environment variable name
+    # The Config object key for the Flask app must be called SECRET_KEY, regardless
+    # of the OS environment variable name
 
     # Flask Config keys and values
     # Cannot use random SECRET_KEYS with multiple gunicorn workers
