@@ -1,5 +1,5 @@
 
-name: Docker Image Automatic build CI - Phase 0 Test
+name: Docker Image Automatic build. CI - Phase 0 Test
 
 on:
   push:
