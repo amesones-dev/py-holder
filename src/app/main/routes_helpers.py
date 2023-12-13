@@ -6,10 +6,12 @@ from flask import request, current_app, jsonify
 
 
 def filler(num):
+    """Fill with num *"""
     return '*' * num
 
 
 def json_response_preferred():
+    """Fill with num *"""
     return current_app.config.get('JSON_PREFERRED') or \
            request.accept_mimetypes['application/json'] >= request.accept_mimetypes['text/html']
 
@@ -17,8 +19,10 @@ def json_response_preferred():
 # Generates a json response
 # HTTP 200 by default
 # Certain json payload by default
-# If cookies provided (list of dicts with one key and one value), all valid cookies are included in the response
+# If cookies provided (list of dicts with one key and one value),
+# all valid cookies are included in the response
 def json_response(status_code=200, payload=None, location=None, cookie_list=None):
+    """Whether json response is preferred based on request parameters"""
     if payload is None:
         payload = {"status": "OK"}
     response = jsonify(payload)
@@ -41,6 +45,7 @@ def json_response(status_code=200, payload=None, location=None, cookie_list=None
 
 
 def non_empty_kv(sparse_dict):
+    """Extract only keys with a value"""
     if isinstance(sparse_dict, dict):
         h = {}
         for key in sparse_dict.keys():
@@ -50,6 +55,7 @@ def non_empty_kv(sparse_dict):
 
 
 def print_dict(input_dict):
+    """Extract only keys with a value and returns a json string representation """
     if isinstance(input_dict, dict):
         h = non_empty_kv(input_dict)
         r = ""
@@ -60,8 +66,11 @@ def print_dict(input_dict):
 
 # Default log level: INFO
 def response_log(raw_response, raw_request, log_level=logging.INFO):
+    """Logs response to standard logging"""
 
-    response_simple_log_str = f'Outgoing RESPONSE to {raw_request.__hash__()}{filler(30)}\nStatus: {raw_response.status_code}'+\
+    response_simple_log_str = \
+        f'Outgoing RESPONSE to ' \
+        f'{raw_request.__hash__()}{filler(30)}\nStatus: {raw_response.status_code}'+\
                               f'\nHeaders:\n{print_dict(raw_response.headers)}\nData\n:{raw_response.data}' + \
                               f'\nLocation: {raw_response.location}\nContent Type: {raw_response.content_type}'
     logging.log(level=log_level, msg=response_simple_log_str)
@@ -69,6 +78,7 @@ def response_log(raw_response, raw_request, log_level=logging.INFO):
 
 # Default log level: INFO
 def request_log(raw_request, log_level=logging.INFO):
+    """Logs request to standard logging"""
     request_simple_log_str = f'Incoming REQUEST {raw_request.__hash__()} {filler(30)}' + \
                              f'\nPath: {raw_request.path}\nServer: {request.server}' + \
                              f'\nMethod: {raw_request.method}\nOrigin: {request.origin}' + \
@@ -78,6 +88,7 @@ def request_log(raw_request, log_level=logging.INFO):
 
 
 def headers_to_dict(raw_request):
+    """Request headers to dictionary representation"""
     headers = raw_request.headers.to_wsgi_list()
     h = {}
     for header in headers:
@@ -86,8 +97,7 @@ def headers_to_dict(raw_request):
 
 
 def request_mirror(raw_request):
-    # Return request info formatted as a dictionary
-    # ready to convert to json
+    """Return request info formatted as a dictionary"""
     request_image = {}
     request_image.update({'0_id': f'{raw_request.__hash__()}'})
     request_image.update({'1_server': raw_request.server})
@@ -100,8 +110,7 @@ def request_mirror(raw_request):
 
 
 def app_time():
-    # Return request info formatted as a dictionary
-    # ready to convert to json
+    """Return app time info formatted as a dictionary"""
     data = {"status": "OK"}
     data.update({"now_utc_iso": datetime.datetime.utcnow().isoformat()})
     data.update({"now_utc_timestamp": datetime.datetime.utcnow().timestamp().__str__()})
