@@ -39,8 +39,8 @@ class TestConfig(object):
     # export FLASK_KEY_LOG=/secrets_storage_path/flask_secret_key.log
     # export  FLASK_SECRET_KEY=$(openssl rand -base64 128 | tee ${FLASK_KEY_LOG})
     # It generates a strong key and record its value to variable and file both
-
-    # The Config object key for the Flask app must be called SECRET_KEY, regardless of the OS environment variable name
+    # The Config object key for the Flask app must be called SECRET_KEY, regardless
+    # of the OS environment variable name
 
     # Flask Config keys and values
     # Cannot use random SECRET_KEYS with multiple gunicorn workers
