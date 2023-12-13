@@ -1,3 +1,4 @@
+"""Run a Flask App using the create_app factory"""
 import os
 
 from app import create_app
