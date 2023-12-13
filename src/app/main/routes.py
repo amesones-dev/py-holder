@@ -19,7 +19,7 @@ def healthcheck():
 
 
 @bp.route('/redirect', methods=['GET'])
-def redirect():
+def test_redirect():
     """Redirection test"""
     data = {"status": "OK"}
     # Redirects to home location(relative URL)
