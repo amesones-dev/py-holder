@@ -73,8 +73,10 @@ def response_log(raw_response, raw_request, log_level=logging.INFO):
     response_simple_log_str = \
         f'Outgoing RESPONSE to ' \
         f'{raw_request.__hash__()}{filler(30)}\nStatus: {raw_response.status_code}'+\
-                              f'\nHeaders:\n{print_dict(raw_response.headers)}\nData\n:{raw_response.data}' + \
-                              f'\nLocation: {raw_response.location}\nContent Type: {raw_response.content_type}'
+                              f'\nHeaders:' \
+                              f'\n{print_dict(raw_response.headers)}\nData\n:{raw_response.data}' + \
+                              f'\nLocation: ' \
+                              f'{raw_response.location}\nContent Type: {raw_response.content_type}'
     logging.log(level=log_level, msg=response_simple_log_str)
 
 
