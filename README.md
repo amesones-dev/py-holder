@@ -1,4 +1,3 @@
-[![Pylint](https://github.com/amesones-dev/py-holder/actions/workflows/pylint.yml/badge.svg)](https://github.com/amesones-dev/py-holder/actions/workflows/pylint.yml)
 [![AZ Container Instance CI/CD Pipeline](https://github.com/amesones-dev/py-holder/actions/workflows/az-ci-cd.yml/badge.svg)](https://github.com/amesones-dev/py-holder/actions/workflows/az-ci-cd.yml)
 
 # py-holder
