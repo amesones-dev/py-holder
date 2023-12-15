@@ -123,7 +123,7 @@ jobs:
 
       # Container instances
       LOCATION: ${{ vars.AZ_LOCATION }}
-      CR_NAME: "cr-101"
+      CR_NAME: ${{ vars.AZ_CR_NAME }}
       CR_IMAGE: "${{vars.DOCKERHUB_REPO}}:${{needs.feature_build_and_push.outputs.build-docker-tag}}"
       CR_IMAGE_TYPE: "Private"
       REGISTRY: "index.docker.io"
