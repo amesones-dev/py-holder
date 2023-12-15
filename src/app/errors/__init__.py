@@ -1,16 +1,16 @@
+"""Flask module: errors"""
 from flask import Blueprint
 
 
-bp_name = 'errors'
-module = __name__
-template_folder = 'templates'
+BP_NAME = 'errors'
+MODULE = __name__
+TEMPLATE_FOLDER = 'templates'
 
 # In Flask
 # template_folder='templates'
 # maps to OS path
 # app/templates
 
-bp = Blueprint(name=bp_name, import_name=module, template_folder=template_folder)
-
+bp = Blueprint(name=BP_NAME, import_name=MODULE, template_folder=TEMPLATE_FOLDER)
 
 from app.errors import handlers
