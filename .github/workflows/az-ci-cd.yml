@@ -2,10 +2,9 @@ name: AZ Container Instance CI/CD Pipeline
 on:
   workflow_dispatch:
   
-  push:
+  pull_request:
     branches:
-      - '**'
-      - '!main'
+      - 'main'
 
 env:
   TEST_NOT_OK: NOT_OK
