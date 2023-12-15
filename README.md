@@ -1,5 +1,5 @@
 [![AZ Container Instance CI/CD Pipeline](https://github.com/amesones-dev/py-holder/actions/workflows/az-ci-cd.yml/badge.svg)](https://github.com/amesones-dev/py-holder/actions/workflows/az-ci-cd.yml)
-
+[![Lint with pylint](https://github.com/amesones-dev/py-holder/actions/workflows/pylint.yml/badge.svg)](https://github.com/amesones-dev/py-holder/actions/workflows/pylint.yml)
 # py-holder
 #### Tools for developing python Flask apps in public Cloud
 
